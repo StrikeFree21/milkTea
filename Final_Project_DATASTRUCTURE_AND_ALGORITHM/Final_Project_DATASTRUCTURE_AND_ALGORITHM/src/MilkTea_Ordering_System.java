@@ -373,7 +373,6 @@
          selectedFlavor = flavors.get(3);
        }
 
-        // Get the selected size
         if (rbsmall.isSelected()) {
          selectedSize = cupsize.get(0);
        } else if (rbmeduim.isSelected()) {
@@ -388,7 +387,6 @@
        }
          double itemPrice = 0.0;
 
-         // Calculate item price based on cup size
          if (selectedSize.equals(cupsize.get(0))) {
         itemPrice += small_price;
          } else if (selectedSize.equals(cupsize.get(1))) {
@@ -397,7 +395,6 @@
         itemPrice += large_price;
          }
 
-         // Add additional charges for flavor, boba, and jelly
         itemPrice += baseprice;
          if (addBoba) {
         itemPrice += bobba_price;
@@ -405,7 +402,7 @@
          if (addJelly) {
         itemPrice += jelly_price;
         }
-
+         
           String cartItem = selectedFlavor + " - Size: " + selectedSize + " - Boba: " + (addBoba ? "Yes" : "No") +
             ", Jelly: " + (addJelly ? "Yes" : "No");
           String formattedPrice = new DecimalFormat("#.##").format(itemPrice);
@@ -418,16 +415,10 @@
 
       private void removeFromCart() {
     if (!cartItems.isEmpty()) {
-        // Remove the item from the cartItems stack
         String removedItem = cartItems.pop();
-
-        // Extract the price from the removed item
         double removedPrice = extractPriceFromCartItem(removedItem);
 
-        // Update the total price
         totalPrice -= removedPrice;
-
-        // Update the table model
         DefaultTableModel defaultCartTableModel = (DefaultTableModel) cartTableModel.getModel();
         int rowCount = defaultCartTableModel.getRowCount();
         if (rowCount > 0) {
@@ -438,45 +429,30 @@
 
 
     private double extractPriceFromCartItem(String priceString) {
-    // Extract and return the price from a cart item string
     int priceIndex = priceString.lastIndexOf("₱");
     if (priceIndex != -1) {
         return Double.parseDouble(priceString.substring(priceIndex + 1));
     } else {
-        // Handle the case where "₱" is not found (fallback to 0.0)
         return 0.0;
     }
 }
 
 
     private void placeOrder() {
-        // Display a detailed receipt
         StringBuilder receipt = new StringBuilder();
         receipt.append("Milk Tea Order Receipt\n\n");
 
-        // Display each item in the cart
         for (String cartItem : cartItems) {
             receipt.append(cartItem).append("\n");
         }
-
-        // Display the total price
         receipt.append("\nTotal Price: ₱").append(new DecimalFormat("#.##").format(totalPrice));
-
-        // Show the receipt in a dialog
         JOptionPane.showMessageDialog(this, receipt.toString(), "Order Receipt", JOptionPane.INFORMATION_MESSAGE);
-
-        // Clear the stack and table model data after placing the order
         cartItems.clear();
         DefaultTableModel model = (DefaultTableModel) cartTableModel.getModel();
         model.setRowCount(0);
-
         totalPrice = 0.0;
     }
-
-
-
-      
-      
+     
     /**
      * @param args the command line arguments
      */
