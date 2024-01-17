@@ -6,7 +6,7 @@
 
 /**
  *
- * @author Bon Robrick De Leon,Gian Diztreza,Lenard Errol Izon
+ * @author Bon Robrick De Leon,Gian Destreza,Lenard Errol Izon
  */
 
 import java.text.DecimalFormat;
